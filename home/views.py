@@ -1,12 +1,20 @@
 import flask
-import flask_login
-from main.settings import db
-from flask_login import logout_user
-from registration.models import User
+import flask_mail
 
 def render_home():
-    return flask.render_template(template_name_or_list='home.html', users = User.query.all(), is_auth = flask_login.current_user.is_authenticated)
+    return flask.render_template(template_name_or_list= 'home.html')
 
-def render_logout():
-    logout_user()
-    return flask.redirect('/')
+def render_feedback():
+    if flask.request.method == 'POST':
+        name = flask.request.form['name']
+        email = flask.request.form['email']
+        feedback_text = flask.request.form['feedback']
+        massege = flask_mail.Message('Новий відгук від клієнта', recipients=['admin_email@example.com'], sender= 'flaskproject155@gmail.com')
+        massege.body = f"Клієнт {name} залишив/ла відгук:\n\n{feedback_text}.\n\nПошта для зворотнього звʼязку з клієнтом: {email}."
+        try:
+            flask_mail.send(massege)
+            return flask.redirect("/home")
+        except Exception as e:
+            return flask.redirect("/home")
+    return flask.render_template(template_name_or_list= 'feedback.html', methods=['POST', 'GET'])
+

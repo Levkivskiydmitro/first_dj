@@ -1,7 +1,9 @@
-import flask
+
+import flask 
 
 home = flask.Blueprint(
-    name='home',
-    import_name='app',
-    template_folder='home/templates',
+    name= 'home_app',
+    import_name= 'home',
+    template_folder= 'templates'
+
 )
