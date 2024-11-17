@@ -3,6 +3,8 @@ import flask, flask_sqlalchemy, flask_migrate, os
 project = flask.Flask(
     import_name='main',
     template_folder='templates',
+    static_folder='static',
+    static_url_path='/main/',
     instance_path= os.path.abspath(__file__ + '/..')
 )
 

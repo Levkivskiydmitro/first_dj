@@ -8,6 +8,6 @@ def render_auth():
         for user in User.query.filter_by(username = flask.request.form['username']):
             if user.password == flask.request.form['password']:
                 flask_login.login_user(user)
-                return flask.redirect('/')
+                return flask.redirect('/feedback')
         return flask.redirect('/authorization_next')
     return flask.render_template('auth.html', is_auth = flask_login.current_user.is_authenticated)
